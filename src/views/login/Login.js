@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import AccountsSummary from '../AccountsSummary/AccountsSummary.js'
 import { Form, FormGroup, Input, Label, Col, Button, Alert} from 'reactstrap';
 import './Login.css'
+
 class Login extends Component {
  constructor(props) {
    super(props)
@@ -74,7 +76,7 @@ class Login extends Component {
     console.log('in on submit', this.state, 'Props', this.props, axios.get(this.props.url))
     return (
       <form>
-      <div class='container'>
+      <div className='container'>
         {this.renderErrors()}
         <div>
           <label style={{fontWeight: 'bold', padding: "10px", fontSize: "20px"}}>
@@ -87,9 +89,10 @@ class Login extends Component {
           <input value={this.state.password} onChange={(e) => {this.updatePassword(e)}} type="text"/>
         </div>
         <div>
-          <button type="button" class="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
+          <button type="button" className="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
         </div>
       </div>
+      <AccountsSummary />
     </form>
     );
   }
