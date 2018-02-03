@@ -30,7 +30,6 @@ router.get('/', function(req, res) {
 
 // GET for users
   router.route('/users').get(function(req, res) {
-    console.log('req', req, res);
     Users.find(function(err, users) {
       if (err)
       res.send(err);
@@ -40,12 +39,12 @@ router.get('/', function(req, res) {
 
  //POST new users to the database
  .post(function(req, res) {
-   console.log('post', req, res);
    var user = new Users();
    user.userId = req.body.userId;
    user.password = req.body.password;
    user.save(function(err) {
      if (err)
+     console.log('err', err);
      res.send(err);
      res.json({ message: 'User successfully added!' });
    });
