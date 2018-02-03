@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Table} from 'reactstrap';
 
-class DepositAccount extends Component {
+class LoanAccount extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -43,4 +43,4 @@ class DepositAccount extends Component {
   }
 }
 
-export default DepositAccount;
+export default LoanAccount;
