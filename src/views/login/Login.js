@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import _ from 'lodash';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import AccountsSummary from '../AccountsSummary/AccountsSummary.js'
-import { Form, FormGroup, Input, Label, Col, Button, Alert} from 'reactstrap';
+import {Alert} from 'reactstrap';
 import './Login.css'
 
 class Login extends Component {
@@ -89,10 +89,9 @@ class Login extends Component {
           <input value={this.state.password} onChange={(e) => {this.updatePassword(e)}} type="text"/>
         </div>
         <div>
-          <button type="button" className="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
+          <button type="button" className="btn btn-primary btn-lg" >Login</button>
         </div>
       </div>
-      <AccountsSummary />
     </form>
     );
   }
