@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+ import _ from 'lodash';
 import { Form, FormGroup, Input, Label, Col, Button, Alert} from 'reactstrap';
 import './Login.css'
 class Login extends Component {
@@ -6,9 +7,9 @@ class Login extends Component {
    super()
    this.state = {
      id: '',
-     passsword: '',
+     passsword: null,
      error: false,
-     errorMessage: '',
+     errorMessage: null,
    }
    this.onSubmit = this.onSubmit.bind(this)
    this.renderErrors = this.renderErrors.bind(this)
@@ -35,12 +36,20 @@ renderErrors() {
   }
 }
  onSubmit() {
-   if (this.state.id < 5) {
+   console.log('length', this.state.id.length)
+   if (this.state.id.length < 5) {
      this.setState({
        error: true,
        errorMessage: '*ID needs to be atleast 5 characters long'
      })
-   } else if (this.state.id > 20 ) {
+   }
+   if (this.state.id.length > 20) {
+     this.setState({
+       error: true,
+       errorMessage: '*ID cannot be longer than 20 characters'
+     })
+   }
+   if(_.isEmpty(this.state.password)) {
      this.setState({
        error: true,
        errorMessage: '*ID cannot be longer than 20 characters'
@@ -55,7 +64,9 @@ renderErrors() {
       <div class='container'>
         {this.renderErrors()}
         <div>
-          <label style={{fontWeight: 'bold', padding: "10px", fontSize: "20px"}}>ID:</label>
+          <label style={{fontWeight: 'bold', padding: "10px", fontSize: "20px"}}>
+            <span>ID:</span>
+            </label>
           <input value={this.state.id} onChange={(e) => {this.updateId(e)}} type="text"/>
         </div>
         <div>
