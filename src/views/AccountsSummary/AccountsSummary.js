@@ -1,16 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import DepositAccount from '../components/DepositAccount'
 import LoanAccount from '../components/LoanAccount'
 import { TabContent, TabPane, Nav, NavItem, NavLink, CarButton, Container, Row, Col } from 'reactstrap';
 import classnames from 'classnames';
+
 class AccountsSummary extends Component {
   constructor(props) {
     super(props)
     this.toggle = this.toggle.bind(this)
+    this.loadDataFromServer = this.loadDataFromServer.bind(this)
     this.state = {
-      activeTab: 1
+      activeTab: 1,
+      accounts: null
     }
+  }
+  componentWillMount (props) {
+    this.loadDataFromServer()
+  }
+
+  loadDataFromServer() {
+    axios.get(this.props.accountsUrl)
+    .then(res => {
+      this.setState({accounts: res.data})
+    })
   }
 
   toggle(tab) {
@@ -22,6 +36,7 @@ class AccountsSummary extends Component {
  }
 
   render() {
+    console.log('accoutns', this.state)
     return (
       <div>
         <Container fluid>
@@ -60,5 +75,11 @@ class AccountsSummary extends Component {
     )
   }
 }
+AccountsSummary.propTypes = {
+  accountsUrl: PropTypes.string,
+}
+ AccountsSummary.defaultProps = {
+   accountsUrl: 'http://localhost:5000/api/accounts'
+ }
 
 export default AccountsSummary;

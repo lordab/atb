@@ -37,9 +37,11 @@ class Login extends Component {
      this.setState({users: res.data})
    })
  }
+
  componentWillMount(){
    this.loadDataFromServer()
  }
+
  renderErrors() {
   if (this.state.error) {
     return (
@@ -52,28 +54,34 @@ class Login extends Component {
   }
 }
  onSubmit() {
-   console.log('length', this.state.id.length)
-   if (this.state.id.length < 5) {
+   if (this.state.id.length <= 7) {
      this.setState({
        error: true,
-       errorMessage: '*ID needs to be atleast 5 characters long'
+       errorMessage: '*ID needs to be atleast 8 characters long'
      })
-   }
-   if (this.state.id.length > 20) {
+   } else if (this.state.id.length > 8 && this.state.id.length > 20 ) {
      this.setState({
        error: true,
        errorMessage: '*ID cannot be longer than 20 characters'
      })
-   }
-   if(_.isEmpty(this.state.password)) {
+   } else if(_.isEmpty(this.state.password)) {
      this.setState({
        error: true,
-       errorMessage: '*ID cannot be longer than 20 characters'
+       errorMessage: '*Password cannot be empty'
+     })
+   } else if(this.state.password.length < 10 || this.state.password.length > 20) {
+     this.setState({
+       error: true,
+       errorMessage: '*Password must be 10-20 characters long '
+     })
+   } else if (!this.state.password.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
+     this.setState({
+       error: true,
+       errorMessage: '*Password must contain one of these %#*&!@ characters'
      })
    }
  }
   render() {
-    console.log('in on submit', this.state, 'Props', this.props, axios.get(this.props.url))
     return (
       <form>
       <div className='container'>
@@ -89,7 +97,7 @@ class Login extends Component {
           <input value={this.state.password} onChange={(e) => {this.updatePassword(e)}} type="text"/>
         </div>
         <div>
-          <button type="button" className="btn btn-primary btn-lg" >Login</button>
+          <button type="button" className="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
         </div>
       </div>
     </form>
