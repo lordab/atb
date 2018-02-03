@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
- import _ from 'lodash';
+import _ from 'lodash';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Form, FormGroup, Input, Label, Col, Button, Alert} from 'reactstrap';
 import './Login.css'
 class Login extends Component {
- constructor() {
-   super()
+ constructor(props) {
+   super(props)
    this.state = {
+     users: {},
      id: '',
      passsword: null,
      error: false,
      errorMessage: null,
    }
+   this.loadDataFromServer = this.loadDataFromServer.bind(this)
    this.onSubmit = this.onSubmit.bind(this)
    this.renderErrors = this.renderErrors.bind(this)
    this.updatePassword = ({ target }) => {
@@ -24,7 +28,17 @@ class Login extends Component {
       })
     }
  }
-renderErrors() {
+
+ loadDataFromServer() {
+   axios.get(this.props.url)
+   .then(res => {
+     this.setState({users: res.data})
+   })
+ }
+ componentWillMount(){
+   this.loadDataFromServer()
+ }
+ renderErrors() {
   if (this.state.error) {
     return (
       <div>
@@ -55,10 +69,9 @@ renderErrors() {
        errorMessage: '*ID cannot be longer than 20 characters'
      })
    }
-   // check code here
  }
   render() {
-    console.log('in on submit', this.state)
+    console.log('in on submit', this.state, 'Props', this.props, axios.get(this.props.url))
     return (
       <form>
       <div class='container'>
@@ -80,6 +93,11 @@ renderErrors() {
     </form>
     );
   }
+}
+
+Login.propTypes = {
+  url: PropTypes.string,
+  users: PropTypes.object,
 }
 
 export default Login;

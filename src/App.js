@@ -11,7 +11,9 @@ class App extends Component {
           <h2>ATB APP</h2>
         </div>
         <p className="App-intro">
-          <Login />
+          <Login
+            url="http://localhost:5000/api/users"
+          />
         </p>
       </div>
     );
