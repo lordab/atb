@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Table} from 'reactstrap';
+import _ from 'lodash'
 
 class DepositAccount extends Component {
   constructor(props) {
@@ -10,6 +11,17 @@ class DepositAccount extends Component {
     }
   }
   render() {
+    console.log('in deposit account component', this.props.accounts)
+    let accounts = []
+    _.forEach(this.props.accounts, (acc) => {
+      console.log('in render function', acc)
+      accounts.push(
+        <tr key={_.uniqueId()}>
+        <th scope="row">account</th>
+        <td>{acc.availableBalance}</td>
+        <td>{acc.currentBalance}</td>
+      </tr>)
+    })
     return (
       <div style={{padding: "22px", justifyContent: "center"}}>
         <Table bordered>
@@ -21,26 +33,14 @@ class DepositAccount extends Component {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Account - 1</th>
-            <td>22</td>
-            <td>1000</td>
-          </tr>
-          <tr>
-            <th scope="row">Account - 2</th>
-            <td>500</td>
-            <td>500</td>
-          </tr>
-          <tr>
-            <th scope="row">Account - 3</th>
-            <td>800</td>
-            <td>800</td>
-          </tr>
+          {accounts}
         </tbody>
       </Table>
       </div>
     )
   }
 }
-
+DepositAccount.propTypes = {
+  accounts: PropTypes.array,
+}
 export default DepositAccount;

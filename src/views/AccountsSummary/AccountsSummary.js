@@ -27,7 +27,6 @@ class AccountsSummary extends Component {
   getAccounts() {
     if(this.state.accounts) {
       _.forEach(this.state.accounts, (account) => {
-        console.log('in deposit', account)
         if(account.accountType === 'Deposit') {
           this.state.depositAccount.push(account)
         } else if(account.accountType === 'Loan') {
@@ -53,7 +52,6 @@ class AccountsSummary extends Component {
  }
 
   render() {
-    console.log('accoutns', this.state)
     return (
       <div className="App">
         <div className='topnav'>
@@ -82,12 +80,12 @@ class AccountsSummary extends Component {
          <TabContent activeTab={this.state.activeTab}>
            <TabPane tabId="1">
              <Row>
-               <DepositAccount />
+               <DepositAccount accounts={this.state.depositAccount}/>
              </Row>
            </TabPane>
            <TabPane tabId="2">
              <Row>
-               <LoanAccount />
+               <LoanAccount accounts={this.state.loanAccount}/>
              </Row>
            </TabPane>
          </TabContent>
