@@ -16,11 +16,9 @@ class Login extends Component {
      passsword: '',
      error: false,
      errorMessage: '',
+     validated: false,
    }
-   this.loadDataFromServer = this.loadDataFromServer.bind(this)
-   this.onSubmit = this.onSubmit.bind(this)
-   this.renderErrors = this.renderErrors.bind(this)
-   this.routeToPage = this.routeToPage.bind(this)
+
    this.updatePassword = ({ target }) => {
       this.setState({
         password: target.value,
@@ -31,6 +29,13 @@ class Login extends Component {
         id: target.value,
       })
     }
+
+   this.loadDataFromServer = this.loadDataFromServer.bind(this)
+   this.onSubmit = this.onSubmit.bind(this)
+   this.renderErrors = this.renderErrors.bind(this)
+   this.routeToPage = this.routeToPage.bind(this)
+   this.validateForm = this.validateForm.bind(this)
+
  }
 
  loadDataFromServer() {
@@ -55,52 +60,69 @@ class Login extends Component {
     )
   }
 }
+
+validateForm () {
+  let regExp = /(?=.*[%#*&!@])(?=.*[a-z])(?=.*[A-Z]).{10,}/
+  let regExpLetters = /([a-zA-Z]){4}/
+  console.log('check for regex', regExpLetters.test(this.state.password))
+  if(_.isEmpty(this.state.id)) {
+    this.setState({
+      error: true,
+      errorMessage: '*ID cannot be blank'
+    })
+  } else if (this.state.id.length <= 7) {
+    this.setState({
+      error: true,
+      errorMessage: '*ID needs to be atleast 8 characters long'
+    })
+  } else if (this.state.id.length > 8 && this.state.id.length > 20 ) {
+    this.setState({
+      error: true,
+      errorMessage: '*ID cannot be longer than 20 characters'
+    })
+  } else if(_.isEmpty(this.state.password)) {
+    this.setState({
+      error: true,
+      errorMessage: '*Password cannot be empty'
+    })
+  } else if(this.state.password.length < 10 || this.state.password.length > 20) {
+    this.setState({
+      error: true,
+      errorMessage: '*Password must be 10-20 characters long '
+    })
+  } else if (!regExp.test(this.state.password)){
+    this.setState({
+      error: true,
+      errorMessage: "*Password must contain One of these %#*&!@ characters, One Capital letter, One lower case letter"
+    })
+  } else if (regExpLetters.test(this.state.password)){
+    this.setState({
+      error: true,
+      errorMessage: "*Password cannot have more than 3 letters together"
+    })
+  } else {
+    this.setState({
+      error: false,
+      errorMessage: '',
+      validated: true
+    })
+  }
+}
+
  onSubmit() {
-   if(_.isEmpty(this.state.id)) {
-     this.setState({
-       error: true,
-       errorMessage: '*ID cannot be blank'
-     })
-   } else if (this.state.id.length <= 7) {
-     this.setState({
-       error: true,
-       errorMessage: '*ID needs to be atleast 8 characters long'
-     })
-   } else if (this.state.id.length > 8 && this.state.id.length > 20 ) {
-     this.setState({
-       error: true,
-       errorMessage: '*ID cannot be longer than 20 characters'
-     })
-   } else if(_.isEmpty(this.state.password)) {
-     this.setState({
-       error: true,
-       errorMessage: '*Password cannot be empty'
-     })
-   } else if(this.state.password.length < 10 || this.state.password.length > 20) {
-     this.setState({
-       error: true,
-       errorMessage: '*Password must be 10-20 characters long '
-     })
-   } else if (!this.state.password.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)){
-     this.setState({
-       error: true,
-       errorMessage: '*Password must contain one of these %#*&!@ characters'
-     })
-   }
-   else {
-     this.setState({
-       error: false,
-       errorMessage: ''
-     })
-   }
+   this.validateForm()
  }
+
  routeToPage() {
-  return(
-    <a>
-    <Link to={{ pathname: 'accountsSummary', state: { id: this.state.id} }}>Go To accounts</Link>
-  </a>
-  )
+  if(this.state.validated) {
+    return(
+        <a>
+          <Link to={{ pathname: 'accountsSummary', state: { id: this.state.id} }}>Go To accounts</Link>
+        </a>
+    )
+  }
  }
+
   render() {
     return (
       <div className='Login'>
