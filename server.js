@@ -38,6 +38,14 @@ router.get('/', function(req, res) {
     });
   })
 
+  router.route('/accounts/:userId').get(function(req, res) {
+    console.log('req', req.params.userId)
+    Accounts.find({userId: req.params.userId})
+    .then(function (acc){
+      res.json(acc);
+    });
+  })
+
   .post(function(req, res) {
     var account = new Accounts();
     account.userId = req.body.userId;
@@ -68,7 +76,6 @@ router.get('/', function(req, res) {
    user.password = req.body.password;
    user.save(function(err) {
      if (err)
-     console.log('err', err);
      res.send(err);
      res.json({ message: 'User successfully added!' });
    });

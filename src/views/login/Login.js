@@ -4,6 +4,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import {Alert} from 'reactstrap';
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './Login.css'
 
 class Login extends Component {
@@ -12,13 +13,14 @@ class Login extends Component {
    this.state = {
      users: {},
      id: '',
-     passsword: null,
+     passsword: '',
      error: false,
-     errorMessage: null,
+     errorMessage: '',
    }
    this.loadDataFromServer = this.loadDataFromServer.bind(this)
    this.onSubmit = this.onSubmit.bind(this)
    this.renderErrors = this.renderErrors.bind(this)
+   this.routeToPage = this.routeToPage.bind(this)
    this.updatePassword = ({ target }) => {
       this.setState({
         password: target.value,
@@ -54,7 +56,12 @@ class Login extends Component {
   }
 }
  onSubmit() {
-   if (this.state.id.length <= 7) {
+   if(_.isEmpty(this.state.id)) {
+     this.setState({
+       error: true,
+       errorMessage: '*ID cannot be blank'
+     })
+   } else if (this.state.id.length <= 7) {
      this.setState({
        error: true,
        errorMessage: '*ID needs to be atleast 8 characters long'
@@ -80,27 +87,37 @@ class Login extends Component {
        errorMessage: '*Password must contain one of these %#*&!@ characters'
      })
    }
+   else {
+     this.setState({
+       error: false,
+       errorMessage: ''
+     })
+   }
+ }
+ routeToPage() {
+  return(
+    <a>
+    <Link to="/accountsSummary" params={{userId: this.state.id}}>Go To accounts</Link>
+  </a>
+  )
  }
   render() {
     return (
+      <div className='Login'>
       <form>
-      <div className='container'>
         {this.renderErrors()}
         <div>
-          <label style={{fontWeight: 'bold', padding: "10px", fontSize: "20px"}}>
-            <span>ID:</span>
-            </label>
-          <input value={this.state.id} onChange={(e) => {this.updateId(e)}} type="text"/>
+          <input placeholder="Enter User Id" value={this.state.id} onChange={(e) => {this.updateId(e)}} type="text"/>
         </div>
         <div>
-          <label style={{fontWeight: 'bold', padding: "10px", fontSize: "20px"}}>Password:</label>
-          <input value={this.state.password} onChange={(e) => {this.updatePassword(e)}} type="text"/>
+          <input placeholder="Password" value={this.state.password} onChange={(e) => {this.updatePassword(e)}} type="password" />
         </div>
         <div>
           <button type="button" className="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
         </div>
-      </div>
+        {(!this.state.error && !_.isEmpty(this.state.id)) ? this.routeToPage(): null}
     </form>
+  </div>
     );
   }
 }

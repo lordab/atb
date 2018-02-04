@@ -52,6 +52,7 @@ class AccountsSummary extends Component {
  }
 
   render() {
+    console.log('accountssummary', this.props)
     return (
       <div className="App">
         <div className='topnav'>
