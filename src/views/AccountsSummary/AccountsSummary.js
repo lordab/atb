@@ -37,7 +37,8 @@ class AccountsSummary extends Component {
   }
 
   loadDataFromServer() {
-    axios.get(this.props.accountsUrl)
+    let url = this.props.accountsUrl + '/' + this.props.location.state.id
+    axios.get(url)
     .then(res => {
       this.setState({accounts: res.data}, () => this.getAccounts())
     })
@@ -52,7 +53,7 @@ class AccountsSummary extends Component {
  }
 
   render() {
-    console.log('accountssummary', this.props)
+    console.log('accountssummary', this.props.location.state.id)
     return (
       <div className="App">
         <div className='topnav'>

@@ -6,7 +6,7 @@ export default () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={App} />
-      <Route path="/accountsSummary" exact component={AccountsSummary} />
+      <Route name="accountsSummary" path="/:id" exact component={AccountsSummary} />
     </Switch>
   </BrowserRouter>
 );

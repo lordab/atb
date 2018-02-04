@@ -97,7 +97,7 @@ class Login extends Component {
  routeToPage() {
   return(
     <a>
-    <Link to="/accountsSummary" params={{userId: this.state.id}}>Go To accounts</Link>
+    <Link to={{ pathname: 'accountsSummary', state: { id: this.state.id} }}>Go To accounts</Link>
   </a>
   )
  }
