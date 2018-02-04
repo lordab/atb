@@ -64,7 +64,8 @@ class Login extends Component {
 validateForm () {
   let regExp = /(?=.*[%#*&!@])(?=.*[a-z])(?=.*[A-Z]).{10,}/
   let regExpLetters = /([a-zA-Z]){4}/
-  console.log('check for regex', regExpLetters.test(this.state.password))
+
+  // Validation for userId
   if(_.isEmpty(this.state.id)) {
     this.setState({
       error: true,
@@ -80,7 +81,10 @@ validateForm () {
       error: true,
       errorMessage: '*ID cannot be longer than 20 characters'
     })
-  } else if(_.isEmpty(this.state.password)) {
+  }
+
+  // Validation for Password
+  else if(_.isEmpty(this.state.password)) {
     this.setState({
       error: true,
       errorMessage: '*Password cannot be empty'
@@ -124,6 +128,7 @@ validateForm () {
  }
 
   render() {
+    console.log('Validated', this.state.validated)
     return (
       <div className='Login'>
       <form>
@@ -135,7 +140,7 @@ validateForm () {
           <input placeholder="Password" value={this.state.password} onChange={(e) => {this.updatePassword(e)}} type="password" />
         </div>
         <div>
-          <button type="button" className="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
+          <button type="button" disabled={this.state.validated} className="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
         </div>
         {(!this.state.error && !_.isEmpty(this.state.id)) ? this.routeToPage(): null}
     </form>
