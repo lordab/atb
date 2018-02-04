@@ -13,11 +13,13 @@ class DepositAccount extends Component {
   render() {
     console.log('in deposit account component', this.props.accounts)
     let accounts = []
+    let count = 0
     _.forEach(this.props.accounts, (acc) => {
       console.log('in render function', acc)
+      count++
       accounts.push(
         <tr key={_.uniqueId()}>
-        <th scope="row">account</th>
+        <th scope="row">{'account-'+ count}</th>
         <td>{acc.availableBalance}</td>
         <td>{acc.currentBalance}</td>
       </tr>)

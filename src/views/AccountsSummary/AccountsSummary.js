@@ -97,6 +97,7 @@ class AccountsSummary extends Component {
 }
 AccountsSummary.propTypes = {
   accountsUrl: PropTypes.string,
+  userId: PropTypes.string,
 }
  AccountsSummary.defaultProps = {
    accountsUrl: 'http://localhost:5000/api/accounts'
