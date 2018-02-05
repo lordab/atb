@@ -4,7 +4,6 @@ import _ from 'lodash';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import {Alert} from 'reactstrap';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './Login.css'
 
 class Login extends Component {
@@ -13,10 +12,11 @@ class Login extends Component {
    this.state = {
      users: {},
      id: '',
-     passsword: '',
+     password: '',
      error: false,
      errorMessage: '',
      validated: false,
+     fieldsMatch: false,
    }
 
    this.updatePassword = ({ target }) => {
@@ -35,7 +35,8 @@ class Login extends Component {
    this.renderErrors = this.renderErrors.bind(this)
    this.routeToPage = this.routeToPage.bind(this)
    this.validateForm = this.validateForm.bind(this)
-
+   this.checkUserNamePasswordMatch = this.checkUserNamePasswordMatch.bind(this)
+   this.renderUserPasswordMatch = this.renderUserPasswordMatch.bind(this)
  }
 
  loadDataFromServer() {
@@ -115,6 +116,36 @@ validateForm () {
 
  onSubmit() {
    this.validateForm()
+   this.checkUserNamePasswordMatch()
+ }
+
+ checkUserNamePasswordMatch () {
+   if(this.state.id && this.state.password) {
+     let selectedUser = {}
+     _.forEach(this.state.users, (user) => {
+       if (user.userId === this.state.id) {
+         selectedUser.id = user.userId
+         selectedUser.password = user.password
+       }
+     })
+     if(selectedUser.password === this.state.password) {
+      this.setState({
+        fieldsMatch :true
+      })
+     }
+   }
+ }
+
+ renderUserPasswordMatch () {
+   if (this.state.validated && !this.state.fieldsMatch) {
+     return (
+       <div style={{padding: "20px"}}>
+         <Alert color="danger" >
+           Password does not match the userId
+         </Alert>
+       </div>
+     )
+   }
  }
 
  routeToPage() {
@@ -128,7 +159,6 @@ validateForm () {
  }
 
   render() {
-    console.log('Validated', this.state.validated)
     return (
       <div className='Login'>
       <form>
@@ -140,9 +170,10 @@ validateForm () {
           <input placeholder="Password" value={this.state.password} onChange={(e) => {this.updatePassword(e)}} type="password" />
         </div>
         <div>
-          <button type="button" disabled={this.state.validated} className="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
+          <button type="button" disabled={this.state.validated && this.state.fieldsMatch} className="btn btn-primary btn-lg" onClick={this.onSubmit}>Login</button>
         </div>
-        {(!this.state.error && !_.isEmpty(this.state.id)) ? this.routeToPage(): null}
+        {(!this.state.error && !_.isEmpty(this.state.id) && this.state.fieldsMatch) ? this.routeToPage(): null}
+        {this.renderUserPasswordMatch()}
     </form>
   </div>
     );
