@@ -7,15 +7,16 @@ class DepositAccount extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeTab: props.activeTab || 0
+      activeTab: props.activeTab || 0,
+      totalCurrentBalance: 0,
     }
   }
+
   render() {
     console.log('in deposit account component', this.props.accounts)
     let accounts = []
     let count = 0
     _.forEach(this.props.accounts, (acc) => {
-      console.log('in render function', acc)
       count++
       accounts.push(
         <tr key={_.uniqueId()}>
@@ -24,22 +25,34 @@ class DepositAccount extends Component {
         <td>{acc.currentBalance}</td>
       </tr>)
     })
-    return (
-      <div style={{padding: "22px", justifyContent: "center"}}>
-        <Table bordered>
-        <thead>
-          <tr>
-            <th>Accounts</th>
-            <th>Current Balance</th>
-            <th>Available Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {accounts}
-        </tbody>
-      </Table>
-      </div>
-    )
+
+    if(_.isEmpty(this.props.accounts)) {
+      return (
+        <div style={{margin: "50px"}}>
+        <span>No accounts to display</span>
+        </div>
+      )
+    } else {
+      return (
+        <div style={{marginLeft: "200px", marginTop: "60px", justifyContent: "center"}}>
+          <Table bordered>
+          <thead>
+            <tr>
+              <th>Accounts</th>
+              <th>Current Balance</th>
+              <th>Available Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {accounts}
+            <tr>
+              <th>Total Current Balance</th>
+            </tr>
+          </tbody>
+        </Table>
+        </div>
+      )
+    }
   }
 }
 DepositAccount.propTypes = {

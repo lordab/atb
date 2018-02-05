@@ -1,5 +1,6 @@
 //server.js
 'use strict';
+
 //import dependencies
 var express = require('express');
 var mongoose = require('mongoose');
@@ -38,27 +39,28 @@ router.get('/', function(req, res) {
     });
   })
 
+// GET account for a user
   router.route('/accounts/:userId').get(function(req, res) {
-    console.log('req', req.params.userId)
     Accounts.find({userId: req.params.userId})
     .then(function (acc){
       res.json(acc);
     });
   })
 
-  .post(function(req, res) {
+//POST for accounts
+   router.post(('/accounts'), function(req, res) {
     var account = new Accounts();
     account.userId = req.body.userId;
     account.accountType = req.body.accountType;
     account.currentBalance = req.body.currentBalance;
     account.availableBalance = req.body.availableBalance;
+    console.log(account)
     account.save(function(err) {
-      if (err)
-      console.log('err', err);
-      res.send(err);
-      res.json({ message: 'Account successfully added!' });
+    if (err)
+    res.send(err);
+    res.json({ message: 'Account successfully added!'});
     });
-   });
+    });
 
 // GET for users
   router.route('/users').get(function(req, res) {
@@ -70,7 +72,7 @@ router.get('/', function(req, res) {
   })
 
  //POST new users to the database
- .post(function(req, res) {
+ router.post(('/users'), function(req, res) {
    var user = new Users();
    user.userId = req.body.userId;
    user.password = req.body.password;

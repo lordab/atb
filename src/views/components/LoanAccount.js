@@ -23,22 +23,33 @@ class LoanAccount extends Component {
         <td>{acc.currentBalance}</td>
       </tr>)
     })
-    return (
-      <div style={{padding: "22px", justifyContent: "center"}}>
-        <Table bordered>
-        <thead>
-          <tr>
-            <th>Accounts</th>
-            <th>Current Balance</th>
-            <th>Available Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {accounts}
-        </tbody>
-      </Table>
-      </div>
-    )
+    if(_.isEmpty(this.props.accounts)) {
+      return (
+        <div style={{margin: "50px"}}>
+          <span>No accounts to display</span>
+        </div>
+      )
+    } else {
+      return (
+        <div style={{marginLeft: "200px", marginTop: "60px", justifyContent: "center"}}>
+          <Table bordered>
+          <thead>
+            <tr>
+              <th>Accounts</th>
+              <th>Current Balance</th>
+              <th>Available Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {accounts}
+            <tr>
+              <th>Total Current Balance</th>
+            </tr>
+          </tbody>
+        </Table>
+        </div>
+      )
+    }
   }
 }
 

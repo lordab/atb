@@ -59,9 +59,12 @@ class AccountsSummary extends Component {
         <div className='topnav'>
           <h2>ATB APP</h2>
         </div>
+        <div style={{margin: "50px"}}>
+          <span>Please select the tab for desired account</span>
+        </div>
         <div style={{padding: '100px'}}>
         <Container fluid>
-        <Nav tabs justified fill>
+        <Nav pills justified fill>
            <NavItem>
              <NavLink
                className={classnames({ active: this.state.activeTab === '1' })}
