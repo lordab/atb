@@ -7,22 +7,26 @@ class LoanAccount extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      activeTab: props.activeTab || 0
+      activeTab: props.activeTab || 0,
+      totalCurrentBalance: 0
     }
   }
   render() {
     let accounts = []
     let count = 0
+    let total = 0
     _.forEach(this.props.accounts, (acc) => {
       console.log('in render function', acc)
       count++
+      total = total + acc.currentBalance
       accounts.push(
         <tr key={_.uniqueId()}>
         <th scope="row">{'account-'+ count}</th>
-        <td>{acc.availableBalance}</td>
         <td>{acc.currentBalance}</td>
+        <td>{acc.availableBalance}</td>
       </tr>)
     })
+    this.state.totalCurrentBalance = total
     if(_.isEmpty(this.props.accounts)) {
       return (
         <div style={{margin: "50px"}}>
@@ -44,6 +48,7 @@ class LoanAccount extends Component {
             {accounts}
             <tr>
               <th>Total Current Balance</th>
+              <th>{this.state.totalCurrentBalance }</th>
             </tr>
           </tbody>
         </Table>

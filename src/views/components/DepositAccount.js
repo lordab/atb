@@ -16,16 +16,18 @@ class DepositAccount extends Component {
     console.log('in deposit account component', this.props.accounts)
     let accounts = []
     let count = 0
+    let total = 0
     _.forEach(this.props.accounts, (acc) => {
       count++
+      total = total + acc.currentBalance
       accounts.push(
         <tr key={_.uniqueId()}>
         <th scope="row">{'account-'+ count}</th>
-        <td>{acc.availableBalance}</td>
         <td>{acc.currentBalance}</td>
+        <td>{acc.availableBalance}</td>
       </tr>)
     })
-
+    this.state.totalCurrentBalance = total
     if(_.isEmpty(this.props.accounts)) {
       return (
         <div style={{margin: "50px"}}>
@@ -47,6 +49,7 @@ class DepositAccount extends Component {
             {accounts}
             <tr>
               <th>Total Current Balance</th>
+              <th>{this.state.totalCurrentBalance }</th>
             </tr>
           </tbody>
         </Table>
