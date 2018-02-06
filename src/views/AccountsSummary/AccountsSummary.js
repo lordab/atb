@@ -56,14 +56,15 @@ class AccountsSummary extends Component {
     return (
       <div className="App">
         <div className='topnav'>
-          <h2>ATB APP</h2>
+          <div style={{height: "50px", fontWeight: "bold", fontSize: "30px"}}>ATB APP</div>
         </div>
         <div style={{margin: "50px"}}>
-          <span>Please select the tab for desired account</span>
+          <span>Welcome to Accounts Summary</span>
         </div>
         <div style={{padding: '100px'}}>
         <Container fluid>
         <Nav pills justified fill>
+          <button>
            <NavItem>
              <NavLink
                className={classnames({ active: this.state.activeTab === '1' })}
@@ -72,6 +73,8 @@ class AccountsSummary extends Component {
                Deposit Accounts
              </NavLink>
            </NavItem>
+         </button>
+         <button>
            <NavItem>
              <NavLink
                className={classnames({ active: this.state.activeTab === '2' })}
@@ -80,6 +83,7 @@ class AccountsSummary extends Component {
                Loan Accounts
              </NavLink>
            </NavItem>
+         </button>
          </Nav>
          <TabContent activeTab={this.state.activeTab}>
            <TabPane tabId="1">
