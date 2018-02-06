@@ -151,9 +151,9 @@ validateForm () {
  routeToPage() {
   if(this.state.validated) {
     return(
-        <a>
+        <div>
           <Link to={{ pathname: 'accountsSummary', state: { id: this.state.id} }}>Go To accounts</Link>
-        </a>
+        </div>
     )
   }
  }

@@ -58,10 +58,10 @@ class AccountsSummary extends Component {
         <div className='topnav'>
           <div style={{height: "50px", fontWeight: "bold", fontSize: "30px"}}>ATB APP</div>
         </div>
-        <div style={{margin: "50px"}}>
+        <div style={{margin: "30px", fontSize: "30px"}}>
           <span>Welcome to Accounts Summary</span>
         </div>
-        <div style={{padding: '100px'}}>
+        <div style={{padding: '30px', justifyContent: "center", marginLeft: "100px"}}>
         <Container fluid>
         <Nav pills justified fill>
           <button>
