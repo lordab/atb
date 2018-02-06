@@ -54,7 +54,6 @@ router.get('/', function(req, res) {
     account.accountType = req.body.accountType;
     account.currentBalance = req.body.currentBalance;
     account.availableBalance = req.body.availableBalance;
-    console.log(account)
     account.save(function(err) {
     if (err)
     res.send(err);

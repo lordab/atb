@@ -4,7 +4,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import DepositAccount from '../components/DepositAccount'
 import LoanAccount from '../components/LoanAccount'
-import { TabContent, TabPane, Nav, NavItem, Navbar, NavLink, NavbarBrand, Container, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Container, Row } from 'reactstrap';
 import classnames from 'classnames';
 
 class AccountsSummary extends Component {
@@ -53,7 +53,6 @@ class AccountsSummary extends Component {
  }
 
   render() {
-    console.log('accountssummary', this.props.location.state.id)
     return (
       <div className="App">
         <div className='topnav'>
